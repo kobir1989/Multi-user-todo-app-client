@@ -1,0 +1,47 @@
+.todo__card {
+  list-style: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 3rem;
+  max-width: 50rem;
+}
+
+.todo__wrapper {
+  margin: 2rem 0 4rem 0;
+  width: 100%;
+}
+
+.todo__title {
+  margin-bottom: 1rem;
+}
+.todo__title::before {
+  content: "";
+  border-left: 6px solid #307ae9;
+  margin-right: 0.5rem;
+  border-radius: 8px;
+}
+.todo__dis {
+  font-size: 1rem;
+  color: #5a5a5a;
+}
+.todo__date-wrapper {
+  margin-top: 1.5rem;
+  color: #5a5a5a;
+  display: flex;
+  align-items: center;
+}
+.todo__title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo__icons {
+  display: flex;
+  gap: 0.8rem;
+  cursor: pointer;
+}
+.todo__date {
+  margin-bottom: 0.2rem;
+}
