@@ -4,8 +4,30 @@ import TextField from "@mui/material/TextField";
 import Navbar from "../../components/nav/Navbar";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const navigate = useNavigate();
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/auth/signup", { name, email, password, confirmPassword });
+    } catch (error) {
+      console.log(error);
+    }
+    setName("")
+    setEmail("")
+    setPassword("")
+    setConfirmPassword("")
+    navigate("/login")
+    
+  };
+
   return (
     <>
       <Navbar />
@@ -17,6 +39,7 @@ const Signup = () => {
         </Box>
         <Box
           component="form"
+          onSubmit={submitHandler}
           sx={{
             "& .MuiTextField-root": { m: 1, width: "100%" },
           }}
@@ -24,18 +47,52 @@ const Signup = () => {
           autoComplete="off"
         >
           <div>
-            <TextField required id="outlined-required" label="Name" defaultValue="Hello World" />
+            <TextField
+              required
+              id="outlined-required"
+              label="Name"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              value={name}
+            />
           </div>
           <div>
-            <TextField required id="outlined-required" label="Email" defaultValue="Hello World" />
+            <TextField
+              required
+              id="outlined-required"
+              label="Email"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              value={email}
+            />
           </div>
           <div>
-            <TextField required id="outlined-required" label="Password" defaultValue="Hello World" />
+            <TextField
+              required
+              id="outlined-required"
+              label="Password"
+              type="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              value={password}
+            />
           </div>
           <div>
-            <TextField required id="outlined-required" label="Confirm Password" defaultValue="Hello World" />
+            <TextField
+              required
+              id="outlined-required"
+              label="Confirm Password"
+              type="password"
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+              }}
+              value={confirmPassword}
+            />
           </div>
-          <Button variant="contained" sx={{ marginLeft: ".5rem", marginTop: ".5rem" }}>
+          <Button type="submit" variant="contained" sx={{ marginLeft: ".5rem", marginTop: ".5rem" }}>
             Create Account
           </Button>
         </Box>
