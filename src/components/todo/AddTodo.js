@@ -7,6 +7,7 @@ import axios from "axios";
 const AddTodo = ({ getTodo, editTodo }) => {
   const [titles, setTitle] = useState("");
   const [todos, setTodo] = useState("");
+  const [isError, setIsError] = React.useState(null);
 
   useEffect(() => {
     if (editTodo) {
@@ -25,7 +26,11 @@ const AddTodo = ({ getTodo, editTodo }) => {
       }
       getTodo();
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        if (error.response.data.errorMessage) {
+          setIsError(error.response.data.errorMessage);
+        }
+      }
     }
     setTitle("");
     setTodo("");
@@ -36,15 +41,13 @@ const AddTodo = ({ getTodo, editTodo }) => {
       component="form"
       onSubmit={submitHandler}
       sx={{
-        "& .MuiTextField-root": { m: 1, width: "100%" },
+        "& .MuiTextField-root": { my: 1, width: "100%" },
       }}
       noValidate
       autoComplete="off"
     >
       <div>
         <TextField
-          // required
-          id="outlined-multiline-flexible"
           label="Title"
           multiline
           maxRows={4}
@@ -52,21 +55,24 @@ const AddTodo = ({ getTodo, editTodo }) => {
             setTitle(e.target.value);
           }}
           value={titles}
+          error={isError ? true : false}
+          helperText={isError}
         />
       </div>
       <div>
         <TextField
-           id="outlined-multiline-flexible"
-           label="Todo"
-           multiline
-           maxRows={4}
+          label="Todo"
+          multiline
+          maxRows={4}
           onChange={(e) => {
             setTodo(e.target.value);
           }}
           value={todos}
+          helperText={isError}
+          error={isError ? true : false}
         />
       </div>
-      <Button type="submit" variant="contained" sx={{ marginLeft: ".5rem", marginTop: ".5rem" }}>
+      <Button type="submit" variant="contained" sx={{ marginTop: ".5rem" }}>
         Add Todo
       </Button>
     </Box>

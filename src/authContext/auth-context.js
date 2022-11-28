@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 const UserContext = React.createContext();
 
 const UserContextProvider = (props) => {
-  const [user, setUser] = useState(undefined);
+  const [user, setUser] = useState(null);
   const getUser = async () => {
     try {
       const userRes = await axios.get("http://localhost:5000/auth/loggedIn");

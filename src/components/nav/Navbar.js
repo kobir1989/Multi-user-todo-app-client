@@ -1,5 +1,6 @@
 import * as React from "react";
-import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, Button, Avatar } from "@mui/material";
+import { deepOrange } from '@mui/material/colors';
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
@@ -15,10 +16,11 @@ const Navbar = () => {
   const logoutHandler = async () => {
     try {
       await axios.get("http://localhost:5000/auth/logout");
+      getUser();
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
-    navigate("/login");
   };
 
   return (
@@ -29,11 +31,7 @@ const Navbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to={"/"}> TODO APP</Link>
           </Typography>
-          {user ? (
-            <Button color="inherit" onClick={logoutHandler}>
-              <LogoutIcon sx={{ marginRight: ".5rem" }} /> <Link to={"#"}>Logout</Link>
-            </Button>
-          ) : (
+          {user === null ? (
             <>
               <Button color="inherit">
                 <LoginIcon sx={{ marginRight: ".5rem" }} /> <Link to={"/login"}>Login</Link>
@@ -41,6 +39,14 @@ const Navbar = () => {
               <Button color="inherit">
                 <AppRegistrationIcon sx={{ marginRight: ".5rem" }} />
                 <Link to={"/signup"}>Siginup</Link>
+              </Button>
+            </>
+          ) : (
+            <>
+             <Avatar sx={{ bgcolor: deepOrange[500], marginRight:"2rem" }}>{user.user.slice(0,1)}</Avatar>
+              <Button color="inherit" onClick={logoutHandler}>
+                <LogoutIcon sx={{ marginRight: ".5rem" }} />
+                Logout
               </Button>
             </>
           )}

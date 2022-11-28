@@ -6,8 +6,6 @@ import AddTodo from "../../components/todo/AddTodo";
 import axios from "axios";
 import UserContext from "../../authContext/auth-context";
 import { useContext } from "react";
-import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 
 const Home = () => {
   const [todos, setTodos] = useState([]);
@@ -33,16 +31,11 @@ const Home = () => {
     <div>
       <Navbar />
       <Box sx={{ maxWidth: "50rem", margin: "auto", paddingTop: "2rem" }}>
-        {user ? (
+        {user !== null && (
           <>
             <AddTodo getTodo={getTodo} editTodo={edit} />
             <TodoList sortTodos={sortTodos} getTodo={getTodo} setEdit={setEdit} />
           </>
-        ) : (
-          <Box sx={{ textAlign: "center" }}>
-            <Typography variant="h3">Welcome</Typography>
-            <p>Please Login to your Account</p>
-          </Box>
         )}
       </Box>
     </div>

@@ -11,24 +11,33 @@ import UserContext from "../../authContext/auth-context";
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isError, setIsError] = React.useState(null);
   const { getUser } = React.useContext(UserContext);
   const navigate = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:5000/auth/login", { email, password });
+      if (res.status === 200) {
+        navigate("/");
+        getUser();
+      }
+
       console.log(res);
-      getUser();
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        if (error.response.data.errorMessage) {
+          setIsError(error.response.data.errorMessage);
+        }
+      }
     }
     setEmail("");
     setPassword("");
-    navigate("/");
   };
   return (
     <>
       <Navbar />
+
       <Box sx={{ maxWidth: "50rem", margin: "auto", paddingTop: "3rem" }}>
         <Box sx={{ margin: "2rem 0" }}>
           <Typography variant="h4" component="h4">
@@ -47,18 +56,21 @@ const Login = () => {
           <div>
             <TextField
               required
-              id="outlined-required"
+              error={isError ? true : false}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
               label="Email"
+              type="email"
               value={email}
+              helperText={isError}
             />
           </div>
           <div>
             <TextField
               required
-              id="outlined-required"
+              error={isError ? true : false}
+              helperText={isError}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}

@@ -45,3 +45,9 @@
 .todo__date {
   margin-bottom: 0.2rem;
 }
+.not_found{
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: #E0144C;
+}

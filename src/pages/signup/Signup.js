@@ -12,20 +12,27 @@ const Signup = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [isError, setIsError] = React.useState(null);
   const navigate = useNavigate();
+
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/auth/signup", { name, email, password, confirmPassword });
+      const res = await axios.post("http://localhost:5000/auth/signup", { name, email, password, confirmPassword });
+      if (res.status === 200) {
+        navigate("/login");
+      }
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        if (error.response.data.errorMessage) {
+          setIsError(error.response.data.errorMessage);
+        }
+      }
     }
-    setName("")
-    setEmail("")
-    setPassword("")
-    setConfirmPassword("")
-    navigate("/login")
-    
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
   };
 
   return (
@@ -39,18 +46,19 @@ const Signup = () => {
         </Box>
         <Box
           component="form"
+          noValidate
           onSubmit={submitHandler}
           sx={{
             "& .MuiTextField-root": { m: 1, width: "100%" },
           }}
-          noValidate
           autoComplete="off"
         >
           <div>
             <TextField
+              error={isError ? true : false}
               required
-              id="outlined-required"
               label="Name"
+              helperText={isError}
               onChange={(e) => {
                 setName(e.target.value);
               }}
@@ -59,9 +67,10 @@ const Signup = () => {
           </div>
           <div>
             <TextField
+              error={isError ? true : false}
               required
-              id="outlined-required"
               label="Email"
+              helperText={isError}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -70,9 +79,10 @@ const Signup = () => {
           </div>
           <div>
             <TextField
+              error={isError ? true : false}
               required
-              id="outlined-required"
               label="Password"
+              helperText={isError}
               type="password"
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -82,9 +92,10 @@ const Signup = () => {
           </div>
           <div>
             <TextField
+              error={isError ? true : false}
               required
-              id="outlined-required"
               label="Confirm Password"
+              helperText={isError}
               type="password"
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
