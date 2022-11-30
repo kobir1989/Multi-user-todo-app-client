@@ -20,9 +20,9 @@ const AddTodo = ({ getTodo, editTodo }) => {
     e.preventDefault();
     try {
       if (editTodo === null) {
-        await axios.post("http://localhost:5000/api/todos/", { title: titles, todo: todos });
+        await axios.post("https://multi-user-todo-app-server-production.up.railway.app/api/todos/", { title: titles, todo: todos });
       } else {
-        await axios.put(`http://localhost:5000/api/todos/${editTodo._id}`, { title: titles, todo: todos });
+        await axios.put(`https://multi-user-todo-app-server-production.up.railway.app/api/todos/${editTodo._id}`, { title: titles, todo: todos });
       }
       getTodo();
     } catch (error) {

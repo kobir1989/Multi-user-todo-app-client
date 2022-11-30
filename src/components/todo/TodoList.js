@@ -10,7 +10,7 @@ const TodoList = ({ sortTodos, getTodo, setEdit }) => {
   const deleteHandler = async (todo) => {
     try {
       window.confirm("Are you sure?");
-      await axios.delete(`http://localhost:5000/api/todos/${todo._id}`);
+      await axios.delete(`https://multi-user-todo-app-server-production.up.railway.app/api/todos/${todo._id}`);
       getTodo();
     } catch (error) {
       console.log(error);
