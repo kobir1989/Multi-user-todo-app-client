@@ -18,7 +18,7 @@ const Signup = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/auth/signup", { name, email, password, confirmPassword });
+      const res = await axios.post("https://multi-user-todo-app-server-production.up.railway.app/auth/signup", { name, email, password, confirmPassword });
       if (res.status === 200) {
         navigate("/login");
       }

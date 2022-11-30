@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AppBar, Box, Toolbar, Typography, Button, Avatar } from "@mui/material";
-import { deepOrange } from '@mui/material/colors';
+import { deepOrange } from "@mui/material/colors";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
@@ -11,11 +11,12 @@ import UserContext from "../../authContext/auth-context";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  
   const navigate = useNavigate();
   const { user, getUser } = React.useContext(UserContext);
   const logoutHandler = async () => {
     try {
-      await axios.get("http://localhost:5000/auth/logout");
+      await axios.get("https://multi-user-todo-app-server-production.up.railway.app/auth/logout");
       getUser();
       navigate("/login");
     } catch (error) {
@@ -43,7 +44,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-             <Avatar sx={{ bgcolor: deepOrange[500], marginRight:"2rem" }}>{user.user.slice(0,1)}</Avatar>
+              <Avatar sx={{ bgcolor: deepOrange[500], marginRight: "2rem" }}>{user.user.slice(0, 1)}</Avatar>
               <Button color="inherit" onClick={logoutHandler}>
                 <LogoutIcon sx={{ marginRight: ".5rem" }} />
                 Logout
