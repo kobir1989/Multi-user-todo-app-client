@@ -4,14 +4,16 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import "./TodoList.css";
 import axios from "axios";
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CardSkeleton from "../skeleton/Skeleton";
+import toast from 'react-hot-toast';
 
-const TodoList = ({ sortTodos, getTodo, setEdit }) => {
+const TodoList = ({ sortTodos, getTodo, setEdit, loading }) => {
   const deleteHandler = async (todo) => {
     try {
       window.confirm("Are you sure?");
       await axios.delete(`https://multi-user-todo-app-server-production.up.railway.app/api/todos/${todo._id}`);
       getTodo();
+      toast.success("Deleted")
     } catch (error) {
       console.log(error);
     }
@@ -19,7 +21,7 @@ const TodoList = ({ sortTodos, getTodo, setEdit }) => {
   return (
     <>
       {sortTodos.length === 0 ? (
-        <div className="not_found"><ErrorOutlineIcon sx={{color:"#E0144C", fontSize:"2.5rem"}}/> <p>No Todo found!</p></div>
+        <div className="not_found"> {loading && <CardSkeleton rows={3}/>}</div>
       ) : (
         sortTodos.map((todo) => (
           <div className="todo__card" key={todo?._id}>
@@ -52,6 +54,7 @@ const TodoList = ({ sortTodos, getTodo, setEdit }) => {
           </div>
         ))
       )}
+    
     </>
   );
 };

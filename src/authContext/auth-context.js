@@ -8,7 +8,7 @@ const UserContextProvider = (props) => {
   const getUser = async () => {
     try {
       const userRes = await axios.get("https://multi-user-todo-app-server-production.up.railway.app/auth/loggedIn");
-      setUser(userRes.data);
+        setUser(userRes.data);
     } catch (error) {
       console.log(error);
     }

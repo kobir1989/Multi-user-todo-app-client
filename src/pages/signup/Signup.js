@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast"
 
 const Signup = () => {
   const [name, setName] = React.useState("");
@@ -21,6 +22,7 @@ const Signup = () => {
       const res = await axios.post("https://multi-user-todo-app-server-production.up.railway.app/auth/signup", { name, email, password, confirmPassword });
       if (res.status === 200) {
         navigate("/login");
+        toast.success("Account Created")
       }
     } catch (error) {
       if (error.response) {

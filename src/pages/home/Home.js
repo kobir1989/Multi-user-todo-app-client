@@ -6,12 +6,16 @@ import AddTodo from "../../components/todo/AddTodo";
 import axios from "axios";
 import UserContext from "../../authContext/auth-context";
 import { useContext } from "react";
+import { Toaster } from 'react-hot-toast';
+import Login from "@mui/icons-material/Login";
 
 const Home = () => {
   const [todos, setTodos] = useState([]);
   const [edit, setEdit] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { user } = useContext(UserContext);
   const getTodo = async () => {
+    setLoading(true);
     try {
       const res = await axios.get("https://multi-user-todo-app-server-production.up.railway.app/api/todos");
       setTodos(res.data);
@@ -19,6 +23,7 @@ const Home = () => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
   useEffect(() => {
     getTodo();
@@ -31,13 +36,15 @@ const Home = () => {
     <div>
       <Navbar />
       <Box sx={{ maxWidth: "50rem", margin: "auto", padding: "2rem" }}>
-        {user !== null && (
+        {user && (
           <>
             <AddTodo getTodo={getTodo} editTodo={edit} />
-            <TodoList sortTodos={sortTodos} getTodo={getTodo} setEdit={setEdit} />
+            <TodoList sortTodos={sortTodos} getTodo={getTodo} setEdit={setEdit} loading={loading} />
           </>
         )}
       </Box>
+      <Toaster position="top-right" reverseOrder={false} />
+      
     </div>
   );
 };

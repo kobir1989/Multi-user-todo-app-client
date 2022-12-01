@@ -17,12 +17,13 @@ const Navbar = () => {
   const logoutHandler = async () => {
     try {
       await axios.get("https://multi-user-todo-app-server-production.up.railway.app/auth/logout");
-      getUser();
+      getUser(null);
       navigate("/login");
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(user)
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -32,7 +33,7 @@ const Navbar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to={"/"}> TODO APP</Link>
           </Typography>
-          {user === null ? (
+          {!user ? (
             <>
               <Button color="inherit">
                 <LoginIcon sx={{ marginRight: ".5rem" }} /> <Link to={"/login"}>Login</Link>

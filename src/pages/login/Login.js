@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../authContext/auth-context";
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
@@ -19,11 +20,11 @@ const Login = () => {
     try {
       const res = await axios.post("https://multi-user-todo-app-server-production.up.railway.app/auth/login", { email, password });
       if (res.status === 200) {
-        navigate("/");
+        toast.success(`Welcome`);
         getUser();
+        navigate("/");
       }
-
-      console.log(res);
+      
     } catch (error) {
       if (error.response) {
         if (error.response.data.errorMessage) {
@@ -37,7 +38,6 @@ const Login = () => {
   return (
     <>
       <Navbar />
-
       <Box sx={{ maxWidth: "50rem", margin: "auto", paddingTop: "3rem" }}>
         <Box sx={{ margin: "2rem 0" }}>
           <Typography variant="h4" component="h4">

@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import toast from "react-hot-toast"
 
 const AddTodo = ({ getTodo, editTodo }) => {
   const [titles, setTitle] = useState("");
@@ -25,6 +26,7 @@ const AddTodo = ({ getTodo, editTodo }) => {
         await axios.put(`https://multi-user-todo-app-server-production.up.railway.app/api/todos/${editTodo._id}`, { title: titles, todo: todos });
       }
       getTodo();
+      toast.success("Successfull");
     } catch (error) {
       if (error.response) {
         if (error.response.data.errorMessage) {
