@@ -1,4 +1,4 @@
 # Multi user tood App 
-## MARN stack 
+## MERN stack 
 
 ## [Live-link](https://multi-user-todo-app-client.vercel.app/)
